@@ -1,0 +1,76 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+body {
+
+}
+
+h1 {
+    margin: 5px;
+}
+
+button {
+    border-radius: 5px;
+    min-height: 48px;
+    padding: 5px;
+    margin: 5px;
+}
+
+input, textarea {
+    border-radius: 5px;
+    margin: 5px;
+    min-width: 250px;
+    min-height: 48px;
+}
+
+.inputDescription {
+    min-height: 100px;
+    padding-top: 0;
+   padding-left: 0;
+   text-align: left;
+
+}
+
+.addNewTodo {
+    background-color: green;
+    margin: 2px;
+}
+
+.deleteAllTodos {
+    background-color: red;
+    margin: 2px;
+}
+
+.removeTodo {
+    background-color: red;
+}
+
+.crossOutOrUncross{
+    background-color: orange;
+}
+
+.configureTodos {
+    background-color: gray;
+    border: solid black 2px;
+}
+
+.todoItem {
+    background-color: gray;
+    border: solid black 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.todoName {
+    background-color: yellow;
+    font-size: 1.4rem;
+}
+
+.todoDescription {
+    background-color: yellow;
+    min-height: 100px;
+    word-wrap: break-word;
+}

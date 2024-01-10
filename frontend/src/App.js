@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { nanoid } from 'nanoid'
+import './main.css';
+
 
 function App() {
   const [todos, setTodos] = useState([{
@@ -42,21 +44,27 @@ function App() {
     }
 
     const deleteAllTodos = () => {
-      setNewTodo([])
+      let confirmedDeleteTodos = false
+      if (todos.length > 0) {confirmedDeleteTodos = window.confirm("Are you sure you want to delete all todos?")}
+      
+      setTodos((prev) => {
+        if (confirmedDeleteTodos) return []
+        else return prev
+      })
     }
 
     return (
       <div className="configureTodos">
         <form onSubmit={handleNewTodo}>
-        <button type="submit"> Add New Todo:</button>
+        <button className="addNewTodo" type="submit"> Add New Todo</button>
         <div key="firstDiv" className="inputName">
-        <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="Your New Todo's Name..."></input>
+        <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="New Todo's Name..."></input>
         </div>
         <div key="secondDiv" className="inputName">
-        <input name="inputDescription" autoFocus key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} type="text" placeholder="Your New Todo's Description..."></input>
+        <textarea className="inputDescription" key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} placeholder="New Todo's Description..."></textarea>
         </div>
         </form>
-        <button onClick={() => deleteAllTodos()}> DELETE ALL TODOS</button>
+        <button className="deleteAllTodos" onClick={() => deleteAllTodos()}> DELETE ALL TODOS</button>
       </div>
     )
   }
@@ -65,10 +73,10 @@ function App() {
     if (todos.length >= 1) {
       return (
         todos.map(todo => <div key={todo.id} className="todoItem">
-          <div>{todo.name}</div>
-          <div>{todo.description}</div>
-          <button onClick={() => handleRemoveTodo(todo.id)}>Remove Todo</button>
-          <button onClick={() => handleCrossOrUncross(todo.id)}>Cross Out / Un-cross</button>
+          <div style={todo.completed ? {textDecoration:"line-through"} : {textDecoration:"none"}} className="todoName">{todo.name}</div>
+          <div style={todo.completed ? {textDecoration:"line-through"} : {textDecoration:"none"}} className="todoDescription">{todo.description}</div>
+          <button className="removeTodo" onClick={() => handleRemoveTodo(todo.id)}>Remove Todo</button>
+          <button className="crossOutOrUncross" onClick={() => handleCrossOrUncross(todo.id)}>Cross Out / Un-cross</button>
         </div>
         )
       )
@@ -80,6 +88,7 @@ function App() {
   return (
     <div className="App">
       <ConfigureTodos />
+      <h1>Todos</h1>
       <Todos />
     </div>
   );

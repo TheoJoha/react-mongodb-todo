@@ -9,15 +9,30 @@ function App() {
     completed: false,
   }])
 
-  const handleRemoveTodo = (e) => {
-    setTodos((prev) => [prev.filter(todo => todo !== e.target.id)])
+  const handleRemoveTodo = (id) => {
+    setTodos((prev) => (prev.filter(todo => todo.id !== id)))
+  }
+
+  const handleCrossOrUncross = (id) => {
+    setTodos((prev) => {
+      const newTodos = prev.map(todo => todo.id !== id ? todo : {...todo, completed: !todo.completed})
+      return newTodos
+    })
   }
   
   const ConfigureTodos = () => {
+    const [newTodo, setNewTodo] = useState({
+      name: "",
+      description: "",
+      id: nanoid(),
+      completed: false,
+    })
+
     const handleNewTodo = (e) => {
       e.preventDefault()
       setTodos((prev) =>( [...prev, newTodo]))
     }
+
     const handleNameChange = (e) => {
       setNewTodo((prev) => ({...prev, name: e.target.value}))
     }
@@ -25,23 +40,23 @@ function App() {
     const handleDescriptionChange = (e) => {
       setNewTodo((prev) => ({...prev, description: e.target.value}))
     }
-    const [newTodo, setNewTodo] = useState({
-      name: "",
-      description: "",
-      id: nanoid(),
-      completed: false,
-    })
+
+    const deleteAllTodos = () => {
+      setNewTodo([])
+    }
+
     return (
       <div className="configureTodos">
         <form onSubmit={handleNewTodo}>
         <button type="submit"> Add New Todo:</button>
         <div key="firstDiv" className="inputName">
-        <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="Your New Todo's Header..."></input>
+        <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="Your New Todo's Name..."></input>
         </div>
         <div key="secondDiv" className="inputName">
         <input name="inputDescription" autoFocus key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} type="text" placeholder="Your New Todo's Description..."></input>
         </div>
         </form>
+        <button onClick={() => deleteAllTodos()}> DELETE ALL TODOS</button>
       </div>
     )
   }
@@ -52,8 +67,8 @@ function App() {
         todos.map(todo => <div key={todo.id} className="todoItem">
           <div>{todo.name}</div>
           <div>{todo.description}</div>
-          <button onClick={handleRemoveTodo}>Remove Todo</button>
-          <button>Cross Over Todo</button>
+          <button onClick={() => handleRemoveTodo(todo.id)}>Remove Todo</button>
+          <button onClick={() => handleCrossOrUncross(todo.id)}>Cross Out / Un-cross</button>
         </div>
         )
       )

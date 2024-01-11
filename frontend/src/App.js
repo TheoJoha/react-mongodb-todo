@@ -74,9 +74,9 @@ function App() {
   const View = () => {
     return (
       <div className="viewOptions">
-        <button onClick={() => setTodoView("all")} value="all">ALL</button>
-        <button onClick={() => setTodoView("remaining")}  value="remaining">REMAINING</button>
-        <button onClick={() => setTodoView("completed")}  value="completed">COMPLETED</button>
+        <button style={todoView === "all" ? {backgroundColor: "yellow"} : {backgroundColor: "none"}} onClick={() => setTodoView("all")} value="all">ALL</button>
+        <button style={todoView === "remaining" ? {backgroundColor: "yellow"} : {backgroundColor: "none"}} onClick={() => setTodoView("remaining")}  value="remaining">REMAINING</button>
+        <button style={todoView === "completed" ? {backgroundColor: "yellow"} : {backgroundColor: "none"}} onClick={() => setTodoView("completed")}  value="completed">COMPLETED</button>
       </div>
     )
   }
@@ -89,6 +89,7 @@ function App() {
           if (todoView === "all") {return true}
           else if (todoView === "remaining" && !todo.completed) return  true
           else if (todoView === "completed" && todo.completed) return  true
+          else return false
 
         }).map(todo => <div key={todo.id} className="todoItem">
           <div style={todo.completed ? { textDecoration: "line-through" } : { textDecoration: "none" }} className="todoName">{todo.name}</div>

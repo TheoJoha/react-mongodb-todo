@@ -35,7 +35,7 @@ input, textarea {
 }
 
 .addNewTodo {
-    background-color: green;
+    background-color: #42A362;
     margin: 2px;
 }
 
@@ -50,6 +50,7 @@ input, textarea {
 
 .crossOutOrUncross{
     background-color: orange;
+    min-width: 160px;
 }
 
 .configureTodos {

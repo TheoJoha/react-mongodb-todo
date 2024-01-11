@@ -10,6 +10,7 @@ function App() {
     id: nanoid(),
     completed: false,
   }])
+  const [todoView, setTodoView] = useState("all")
 
   const handleRemoveTodo = (id) => {
     setTodos((prev) => (prev.filter(todo => todo.id !== id)))
@@ -17,11 +18,11 @@ function App() {
 
   const handleCrossOrUncross = (id) => {
     setTodos((prev) => {
-      const newTodos = prev.map(todo => todo.id !== id ? todo : {...todo, completed: !todo.completed})
+      const newTodos = prev.map(todo => todo.id !== id ? todo : { ...todo, completed: !todo.completed })
       return newTodos
     })
   }
-  
+
   const ConfigureTodos = () => {
     const [newTodo, setNewTodo] = useState({
       name: "",
@@ -32,21 +33,21 @@ function App() {
 
     const handleNewTodo = (e) => {
       e.preventDefault()
-      setTodos((prev) =>( [...prev, newTodo]))
+      setTodos((prev) => ([...prev, newTodo]))
     }
 
     const handleNameChange = (e) => {
-      setNewTodo((prev) => ({...prev, name: e.target.value}))
+      setNewTodo((prev) => ({ ...prev, name: e.target.value }))
     }
-  
+
     const handleDescriptionChange = (e) => {
-      setNewTodo((prev) => ({...prev, description: e.target.value}))
+      setNewTodo((prev) => ({ ...prev, description: e.target.value }))
     }
 
     const deleteAllTodos = () => {
       let confirmedDeleteTodos = false
-      if (todos.length > 0) {confirmedDeleteTodos = window.confirm("Are you sure you want to delete all todos?")}
-      
+      if (todos.length > 0) { confirmedDeleteTodos = window.confirm("Are you sure you want to delete all todos?") }
+
       setTodos((prev) => {
         if (confirmedDeleteTodos) return []
         else return prev
@@ -56,27 +57,44 @@ function App() {
     return (
       <div className="configureTodos">
         <form onSubmit={handleNewTodo}>
-        <button className="addNewTodo" type="submit"> Add New Todo</button>
-        <div key="firstDiv" className="inputName">
-        <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="New Todo's Name..."></input>
-        </div>
-        <div key="secondDiv" className="inputName">
-        <textarea className="inputDescription" key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} placeholder="New Todo's Description..."></textarea>
-        </div>
+          <button className="addNewTodo" type="submit"> ADD NEW TODO</button>
+          <div key="firstDiv" className="inputName">
+            <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="New Todo's Name..."></input>
+          </div>
+          <div key="secondDiv" className="inputName">
+            <textarea className="inputDescription" key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} placeholder="New Todo's Description..."></textarea>
+          </div>
         </form>
-        <button className="deleteAllTodos" onClick={() => deleteAllTodos()}> DELETE ALL TODOS</button>
+        <button className="deleteAllTodos" onClick={() => deleteAllTodos()}> DELETE ALL</button>
+
+      </div>
+    )
+  }
+
+  const View = () => {
+    return (
+      <div className="viewOptions">
+        <button onClick={() => setTodoView("all")} value="all">ALL</button>
+        <button onClick={() => setTodoView("remaining")}  value="remaining">REMAINING</button>
+        <button onClick={() => setTodoView("completed")}  value="completed">COMPLETED</button>
       </div>
     )
   }
 
   const Todos = () => {
+
     if (todos.length >= 1) {
       return (
-        todos.map(todo => <div key={todo.id} className="todoItem">
-          <div style={todo.completed ? {textDecoration:"line-through"} : {textDecoration:"none"}} className="todoName">{todo.name}</div>
-          <div style={todo.completed ? {textDecoration:"line-through"} : {textDecoration:"none"}} className="todoDescription">{todo.description}</div>
-          <button className="removeTodo" onClick={() => handleRemoveTodo(todo.id)}>Remove Todo</button>
-          <button className="crossOutOrUncross" onClick={() => handleCrossOrUncross(todo.id)}>Cross Out / Un-cross</button>
+        todos.filter(todo => {
+          if (todoView === "all") {return true}
+          else if (todoView === "remaining" && !todo.completed) return  true
+          else if (todoView === "completed" && todo.completed) return  true
+
+        }).map(todo => <div key={todo.id} className="todoItem">
+          <div style={todo.completed ? { textDecoration: "line-through" } : { textDecoration: "none" }} className="todoName">{todo.name}</div>
+          <div style={todo.completed ? { textDecoration: "line-through" } : { textDecoration: "none" }} className="todoDescription">{todo.description}</div>
+          <button className="removeTodo" onClick={() => handleRemoveTodo(todo.id)}>DELETE</button>
+          <button className="crossOutOrUncross" onClick={() => handleCrossOrUncross(todo.id)}>{todo.completed ? "REVERSE IS COMPLETED" : "IS COMPLETED"}</button>
         </div>
         )
       )
@@ -89,6 +107,7 @@ function App() {
     <div className="App">
       <ConfigureTodos />
       <h1>Todos</h1>
+      <View />
       <Todos />
     </div>
   );

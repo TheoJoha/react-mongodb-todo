@@ -59,10 +59,15 @@ function App() {
         <form onSubmit={handleNewTodo}>
           <button className="addNewTodo" type="submit"> ADD NEW TODO</button>
           <div key="firstDiv" className="inputName">
-            <input name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="New Todo's Name..."></input>
+            <label htmlFor="inputName">Name</label>
+            <br/>
+            <input id="inputName" name="inputName" autoFocus key="inputName" value={newTodo.name} onChange={(e) => handleNameChange(e)} type="text" placeholder="New Todo's Name..."></input>
+            
           </div>
           <div key="secondDiv" className="inputName">
-            <textarea className="inputDescription" key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} placeholder="New Todo's Description..."></textarea>
+            <label htmlFor="inputDescription">Description</label>
+            <br/>
+            <textarea id="inputDescription" className="inputDescription" key="inputDescription" value={newTodo.description} onChange={(e) => handleDescriptionChange(e)} placeholder="New Todo's Description..."></textarea>
           </div>
         </form>
         <button className="deleteAllTodos" onClick={() => deleteAllTodos()}> DELETE ALL</button>
@@ -99,9 +104,7 @@ function App() {
         </div>
         )
       )
-    } else {
-      return ""
-    }
+    } 
   }
 
   return (

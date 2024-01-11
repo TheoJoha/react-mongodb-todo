@@ -54,12 +54,12 @@ input, textarea {
 }
 
 .configureTodos {
-    background-color: gray;
+    background-color: #D3D3D3;
     border: solid black 2px;
 }
 
 .todoItem {
-    background-color: gray;
+    background-color: #D3D3D3;
     border: solid black 2px;
     margin-top: 5px;
     margin-bottom: 5px;

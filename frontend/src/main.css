@@ -75,3 +75,35 @@ input, textarea {
     min-height: 100px;
     word-wrap: break-word;
 }
+
+
+
+@media only screen and (min-width : 768px) {
+    .App {
+        position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+    }
+
+    input, textarea {
+        width: 450px;
+    }
+}
+
+@media only screen and (min-width : 1025px) {
+    .App {
+        position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+    }
+
+    input, textarea {
+        width: 600px;
+    }
+}

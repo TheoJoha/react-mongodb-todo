@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { nanoid } from 'nanoid'
 import './main.css';
+import axios from "axios";
+
 
 
 function App() {
@@ -11,6 +13,13 @@ function App() {
     completed: false,
   }])
   const [todoView, setTodoView] = useState("all")
+  const [items, setItems] = useState([]); 
+
+  useEffect(() => {
+    axios.get("/todos")
+      .then(response => setItems(response.data))
+      .catch(error => console.error(error));
+  }, []);
 
   const handleRemoveTodo = (id) => {
     setTodos((prev) => (prev.filter(todo => todo.id !== id)))
